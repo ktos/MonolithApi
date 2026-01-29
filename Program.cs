@@ -23,7 +23,7 @@ var app = builder.Build();
 
 app.MapPost(
     "/archive",
-    async ([FromBody] MonolithRequest request, ILogger<Program> logger) =>
+    async ([FromBody] MonolithRequest request, ILogger<Program> logger, IConfiguration config) =>
     {
         logger.LogInformation("Archive request received");
 
@@ -129,9 +129,15 @@ app.MapPost(
             args.Add("-");
         }
 
+        // Determine monolith executable path
+        var useBundledMonolith = config.GetValue<bool>("UseBundledMonolith", false);
+        logger.LogDebug("Use bundled Monolith: {UseBundledMonolith}", useBundledMonolith);
+
+        var monolithPath = useBundledMonolith ? Path.Combine(".", "monolith") : "monolith";
+
         var psi = new ProcessStartInfo
         {
-            FileName = Path.Combine(".", "monolith"),
+            FileName = monolithPath,
             RedirectStandardInput = true,
             RedirectStandardOutput = true,
             RedirectStandardError = true,

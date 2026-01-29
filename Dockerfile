@@ -20,4 +20,6 @@ RUN chmod +x /app/monolith
 
 EXPOSE 8080
 
+ENV ASPNETCORE_USEBUNDLEDMONOLITH=true
+
 ENTRYPOINT ["dotnet", "MonolithApi.dll"]
