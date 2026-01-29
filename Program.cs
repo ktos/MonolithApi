@@ -131,7 +131,7 @@ app.MapPost(
 
         var psi = new ProcessStartInfo
         {
-            FileName = "monolith",
+            FileName = Path.Combine(".", "monolith"),
             RedirectStandardInput = true,
             RedirectStandardOutput = true,
             RedirectStandardError = true,
