@@ -79,6 +79,12 @@ app.MapPost(
             args.Add(o.BaseUrl);
         }
 
+        var configuredUserAgent = config.GetValue<string>("UserAgent");
+        if (!string.IsNullOrWhiteSpace(o.UserAgent))
+        {
+            o.UserAgent = configuredUserAgent;
+        }
+
         if (!string.IsNullOrWhiteSpace(o.UserAgent))
         {
             args.Add("-u");
